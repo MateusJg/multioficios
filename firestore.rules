@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Permisos para colaboradores registrados y postulaciones
+    match /collaborators/{colabId} {
+      allow read, write: if true;
+    }
+
+    // Permisos para contratos y órdenes de servicio con custodia
+    match /contracts/{contractId} {
+      allow read, write: if true;
+    }
+
+    // Permisos para salas de chat directas e historial
+    match /chats/{chatId} {
+      allow read, write: if true;
+
+      // Subcolección de mensajes en tiempo real
+      match /messages/{messageId} {
+        allow read, write: if true;
+      }
+    }
+
+    // Colección de prueba y fallback
+    match /test_connection/{docId} {
+      allow read, write: if true;
+    }
+  }
+}
